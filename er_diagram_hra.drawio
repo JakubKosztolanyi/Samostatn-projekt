@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<mxfile host="app.diagrams.net">
+  <diagram name="ER Diagram Hra">
+    <mxGraphModel>
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="2" value="&lt;b&gt;Hráč&lt;/b&gt;&lt;br/&gt;id_hrace (PK)&lt;br/&gt;jmeno&lt;br/&gt;datum_registrace" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="100" y="100" width="180" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="3" value="&lt;b&gt;Skóre&lt;/b&gt;&lt;br/&gt;id_skore (PK)&lt;br/&gt;hodnota&lt;br/&gt;datum&lt;br/&gt;id_hrace (FK)" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="400" y="100" width="180" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="4" value="&lt;b&gt;Nastavení&lt;/b&gt;&lt;br/&gt;id_nastaveni (PK)&lt;br/&gt;hlasistost&lt;br/&gt;obtiznost&lt;br/&gt;id_hrace (FK)" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="100" y="300" width="180" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="5" value="&lt;b&gt;Hra&lt;/b&gt;&lt;br/&gt;id_hry (PK)&lt;br/&gt;nazev&lt;br/&gt;verze" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="400" y="300" width="180" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_2_3" value="1:N (hráč má více skóre)" style="endArrow=open;html=1;dashed=0;strokeColor=#000000;" edge="1" source="2" target="3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_2_4" value="1:1 (hráč má nastavení)" style="endArrow=open;html=1;dashed=0;strokeColor=#000000;" edge="1" source="2" target="4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_5_3" value="1:N (hra má více skóre)" style="endArrow=open;html=1;dashed=0;strokeColor=#000000;" edge="1" source="5" target="3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
