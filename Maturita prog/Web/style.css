@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Orbitron', sans-serif;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at top, rgba(0,255,255,0.15), transparent 40%),
+    radial-gradient(circle at bottom, rgba(255,0,255,0.15), transparent 40%),
+    linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px 50px;
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+thead {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+th, td {
+  padding: 15px;
+  text-align: center;
+}
+
+tbody tr {
+  background: rgba(255, 255, 255, 0.05);
+  transition: background 0.2s;
+}
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+th {
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.back {
+  margin-top: 30px;
+  display: inline-block;
+  text-decoration: none;
+  color: #00c6ff;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.back:hover {
+  color: #6ad7ff;
+}
