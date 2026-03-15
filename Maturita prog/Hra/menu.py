@@ -1,65 +1,110 @@
 import pygame
 import sys
-import Hra  # importuje upravenou Hra.py
+import Hra as hra
+from databaze import vytvor_db
+
+vytvor_db()
 
 pygame.init()
 
-# --- Nastavení okna ---
-šířka = 500
-výška = 600
-okno = pygame.display.set_mode((šířka, výška))
-pygame.display.set_caption("Menu hry")
+WIDTH = 500
+HEIGHT = 600
 
-# --- Barvy ---
-BÍLÁ = (255, 255, 255)
-ČERNÁ = (0, 0, 0)
-MODRÁ = (0, 120, 255)
-SVĚTLÁ_MODRÁ = (100, 200, 255)
+okno = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Hopík - Menu")
 
-# --- Fonty ---
-font = pygame.font.Font(None, 60)
-font_tlačítko = pygame.font.Font(None, 50)
+WHITE = (245,245,245)
+BLACK = (30,30,30)
+BLUE = (70,130,255)
+BLUE_LIGHT = (120,170,255)
 
-# --- Funkce tlačítek ---
-def kresli_tlačítko(text, x, y, w, h, barva, barva_hover, akce=None):
-    myš = pygame.mouse.get_pos()
-    klik = pygame.mouse.get_pressed()
+title_font = pygame.font.Font(None, 80)
+font = pygame.font.Font(None, 40)
 
-    if x + w > myš[0] > x and y + h > myš[1] > y:
-        pygame.draw.rect(okno, barva_hover, (x, y, w, h))
-        if klik[0] == 1 and akce is not None:
-            akce()
+input_box = pygame.Rect(150,250,200,45)
+
+jmeno_hrace = ""
+aktivni = False
+
+
+def button(text,x,y,w,h,action=None):
+
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+
+    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+
+        pygame.draw.rect(okno,BLUE_LIGHT,(x,y,w,h),border_radius=8)
+
+        if click[0] == 1 and action != None:
+            action()
+
     else:
-        pygame.draw.rect(okno, barva, (x, y, w, h))
+        pygame.draw.rect(okno,BLUE,(x,y,w,h),border_radius=8)
 
-    text_obj = font_tlačítko.render(text, True, ČERNÁ)
-    okno.blit(text_obj, (x + (w - text_obj.get_width()) / 2, y + (h - text_obj.get_height()) / 2))
+    txt = font.render(text,True,WHITE)
 
-# --- Funkce akcí ---
-def spustit_hru():
-    # Zavolá funkci ze souboru Hra.py
-    Hra.spust_hru()
+    okno.blit(txt,(x+w/2-txt.get_width()/2,y+h/2-txt.get_height()/2))
 
-def konec_hry():
+
+def start_game():
+
+    global jmeno_hrace
+
+    if jmeno_hrace.strip() != "":
+        hra.spust_hru(jmeno_hrace)
+
+
+def quit_game():
     pygame.quit()
     sys.exit()
 
-# --- Hlavní smyčka menu ---
+
 def menu():
+
+    global jmeno_hrace, aktivni
+
     while True:
-        okno.fill(BÍLÁ)
-        titul = font.render("Stick Jump!", True, ČERNÁ)
-        okno.blit(titul, (šířka // 2 - titul.get_width() // 2, 150))
 
-        # Tlačítka
-        kresli_tlačítko("Start", 150, 300, 200, 60, MODRÁ, SVĚTLÁ_MODRÁ, spustit_hru)
-        kresli_tlačítko("Konec", 150, 400, 200, 60, MODRÁ, SVĚTLÁ_MODRÁ, konec_hry)
+        okno.fill(WHITE)
 
-        # Zpracování událostí
+        title = title_font.render("Hopík",True,BLACK)
+        okno.blit(title,(WIDTH/2-title.get_width()/2,120))
+
+        label = font.render("Zadej jméno:",True,BLACK)
+        okno.blit(label,(WIDTH/2-label.get_width()/2,210))
+
+        pygame.draw.rect(okno,BLUE if aktivni else BLACK,input_box,2)
+
+        text_surface = font.render(jmeno_hrace,True,BLACK)
+        okno.blit(text_surface,(input_box.x+8,input_box.y+8))
+
+        button("Start hry",150,330,200,50,start_game)
+        button("Konec",150,400,200,50,quit_game)
+
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
-                konec_hry()
+                quit_game()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+
+                if input_box.collidepoint(event.pos):
+                    aktivni = True
+                else:
+                    aktivni = False
+
+            if event.type == pygame.KEYDOWN and aktivni:
+
+                if event.key == pygame.K_BACKSPACE:
+                    jmeno_hrace = jmeno_hrace[:-1]
+
+                else:
+
+                    if len(jmeno_hrace) < 12:
+                        jmeno_hrace += event.unicode
 
         pygame.display.update()
+
 
 menu()
