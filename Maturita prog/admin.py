@@ -193,4 +193,14 @@ class Server(BaseHTTPRequestHandler):
 print("Server běží na:")
 print("http://localhost:8000")
 
-HTTPServer(("localhost", PORT), Server).serve_forever()
+server = HTTPServer(("localhost", PORT), Server)
+
+try:
+    server.serve_forever()
+
+except KeyboardInterrupt:
+    print("\nServer byl ukončen (CTRL+C)")
+
+finally:
+    server.server_close()
+    print("Server vypnut")

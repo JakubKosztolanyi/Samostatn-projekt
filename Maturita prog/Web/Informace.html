@@ -1,41 +1,88 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <title>Informace o hře</title>
+<meta charset="UTF-8">
+<title>Informace o hře</title>
 
-  <!-- společný styl -->
-  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>ℹ️ INFORMACE</h1>
-    <div class="subtitle">O projektu</div>
+<div class="container">
 
-    <table>
-      <tbody>
-        <tr>
-          <th>Název hry</th>
-          <td>Hopík</td>
-        </tr>
-        <tr>
-          <th>Autor</th>
-          <td>Jakub Kosztolányi</td>
-        </tr>
-        <tr>
-          <th>Verze</th>
-          <td>1.0</td>
-        </tr>
-        <tr>
-          <th>Stav</th>
-          <td>Ve vývoji</td>
-        </tr>
-      </tbody>
-    </table>
+<h1>ℹ️ INFORMACE</h1>
+<div class="subtitle">O projektu</div>
 
-    <a class="back" href="index.html">← Zpět do menu</a>
-  </div>
+<table>
+<tbody>
+
+<tr>
+<th>Název hry</th>
+<td>Hopík</td>
+</tr>
+
+<tr>
+<th>Autor</th>
+<td>Jakub Kosztolányi</td>
+</tr>
+
+<tr>
+<th>Verze</th>
+<td>1.0</td>
+</tr>
+
+<tr>
+<th>Stav</th>
+<td>Ve vývoji</td>
+</tr>
+
+</tbody>
+</table>
+
+
+<h2>Popis programu</h2>
+
+<p>
+Hra Hopík je jednoduchá plošinová hra vytvořená v jazyce Python pomocí knihovny pygame.
+Hráč ovládá postavu, která skáče po pohyblivých plošinách a snaží se dosáhnout co
+nejvyššího skóre. Skóre se ukládá do databáze a následně se zobrazuje na webové stránce.
+</p>
+
+
+<h2>Algoritmus hry</h2>
+
+<pre>
+1. Spustí se hra a vytvoří se herní okno
+2. Vygenerují se plošiny
+
+3. while hra běží:
+
+    načti vstup hráče (šipky)
+
+    aplikuj gravitaci na hráče
+
+    pokud hráč narazí na plošinu:
+        hráč vyskočí
+
+    pokud je hráč vysoko:
+        posuň obrazovku
+        přičti skóre
+
+    pohybuj plošinami
+
+    generuj nové plošiny
+
+    pokud hráč spadne:
+        ulož skóre do databáze
+        aktualizuj HTML tabulku
+        konec hry
+</pre>
+
+
+<a class="back" href="index.html">← Zpět do menu</a>
+
+</div>
 
 </body>
 </html>
