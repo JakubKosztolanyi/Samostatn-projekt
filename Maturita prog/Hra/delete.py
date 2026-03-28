@@ -1,27 +1,36 @@
-import sys  # knihovna pro práci s argumenty z příkazové řádky
+import sys
 
-from html_generator import aktualizuj_html  # funkce která znovu vygeneruje HTML stránku se score
-from databaze import smaz_score  # funkce která smaže score z databáze podle ID
+from html_generator import aktualizuj_html
+from databaze import smaz_score
 
 
-# vezme argument z příkazové řádky
-# pokud žádný argument není, uloží se prázdný řetězec
+def zpracuj_argument(query):
+    """
+    Zpracuje argument z příkazové řádky a smaže příslušné skóre.
+
+    Očekává argument ve formátu 'id=<číslo>', například 'id=3'.
+    Pokud argument obsahuje 'id=', extrahuje ID, smaže záznam
+    z databáze a aktualizuje HTML tabulku skóre.
+
+    Args:
+        query (str): Argument z příkazové řádky, např. 'id=3'.
+    """
+    # zkontroluje jestli argument obsahuje "id="
+    if "id=" in query:
+
+        # extrahuje číslo ID za znakem "="
+        id = query.split("=")[1]
+
+        # smaže záznam z databáze
+        smaz_score(id)
+
+        # aktualizuje HTML tabulku
+        aktualizuj_html()
+
+        print("Score smazáno")
+
+
+# načte první argument z příkazové řádky, nebo prázdný řetězec
 query = sys.argv[1] if len(sys.argv) > 1 else ""
 
-
-# zkontroluje jestli argument obsahuje "id="
-# např. id=3
-if "id=" in query:
-
-    # rozdělí text podle "=" a vezme druhou část
-    # např. "id=3" -> ["id","3"] -> vezme "3"
-    id = query.split("=")[1]
-
-    # zavolá funkci která smaže score s daným ID z databáze
-    smaz_score(id)
-
-    # znovu vygeneruje HTML stránku aby se aktualizoval seznam score
-    aktualizuj_html()
-
-    # vypíše zprávu do konzole
-    print("Score smazáno")
+zpracuj_argument(query)

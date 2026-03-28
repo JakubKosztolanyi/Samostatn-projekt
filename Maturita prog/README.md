@@ -21,25 +21,31 @@ Projekt obsahuje také admin rozhraní pro mazání výsledků.
 - SQLite
 - HTML
 - CSS
+- JavaScript
 
 ---
 
 ## Struktura projektu
 
-MATURITA PROG
+```
+MATURITA PROG/
 
 Hra/
-- Hra.py
-- menu.py
-- databaze.py
-- html_generator.py
+├── Hra.py
+├── menu.py
+├── databaze.py
+├── html_generator.py
+└── delete.py
 
 Web/
-- index.html
-- hra.html
-- navod.html
-- informace.html
-- style.css
+├── index.html
+├── hra.html
+├── navod.html
+├── informace.html
+└── style.css
+
+admin.py
+```
 
 ---
 
@@ -49,16 +55,17 @@ Web/
 
 2. Nainstalujte knihovnu pygame
 
-
+```
 pip install pygame
-
+```
 
 ---
 
 ## Spuštění hry
 
-Spusťte menu hry: py Hra/menu.py
-
+```
+py Hra/menu.py
+```
 
 ---
 
@@ -66,14 +73,13 @@ Spusťte menu hry: py Hra/menu.py
 
 Spusťte admin server:
 
-
+```
 py admin.py
-
+```
 
 Poté otevřete v prohlížeči: http://localhost:8000
 
-
-Admin heslo: admin
+Admin heslo lze změnit přímo v souboru `admin.py`.
 
 ---
 
@@ -87,4 +93,4 @@ Databáze ukládá:
 - skóre
 - datum hry
 
-Výsledky se automaticky zobrazují na stránce: Web/hra.html
+Výsledky se automaticky zobrazují na stránce: `Web/hra.html`

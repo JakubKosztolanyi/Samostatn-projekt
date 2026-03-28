@@ -5,6 +5,60 @@
 <title>Informace o hře</title>
 
 <link rel="stylesheet" href="style.css">
+
+<style>
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.card h2 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.card p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.card pre {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.card table {
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+.card-full {
+  grid-column: 1 / -1;
+}
+
+.diagram img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.github-link { color: white; }
+.github-link:visited { color: white; }
+.github-link:hover { color: white; }
+</style>
+
 </head>
 
 <body>
@@ -14,71 +68,129 @@
 <h1>ℹ️ INFORMACE</h1>
 <div class="subtitle">O projektu</div>
 
-<table>
-<tbody>
+<div class="grid">
 
-<tr>
-<th>Název hry</th>
-<td>Hopík</td>
-</tr>
+  <!-- LEVÝ SLOUPEC: Info o projektu -->
+  <div class="card">
+    <h2>O projektu</h2>
+    <table>
+    <tbody>
+    <tr><th>Název hry</th><td>Hopík</td></tr>
+    <tr><th>Autor</th><td>Jakub Kosztolányi</td></tr>
+    <tr><th>Verze</th><td>1.5</td></tr>
+    <tr><th>Stav</th><td>Complete</td></tr>
+    <tr><th>GitHub</th><td>
+      <a class="github-link" href="https://github.com/JakubKosztolanyi/Samostatn-projekt" target="_blank">Otevřít projekt</a>
+    </td></tr>
+    </tbody>
+    </table>
+  </div>
 
-<tr>
-<th>Autor</th>
-<td>Jakub Kosztolányi</td>
-</tr>
+  <!-- PRAVÝ SLOUPEC: Popis programu -->
+  <div class="card">
+    <h2>Popis programu</h2>
+    <p>
+      Hra Hopík je jednoduchá plošinová hra vytvořená v jazyce Python pomocí knihovny pygame.
+      Hráč ovládá postavu, která skáče po pohyblivých plošinách a snaží se dosáhnout co
+      nejvyššího skóre. Skóre se ukládá do databáze a zobrazuje na webové stránce.
+    </p>
+  </div>
 
-<tr>
-<th>Verze</th>
-<td>1.0</td>
-</tr>
+  <!-- LEVÝ SLOUPEC: Použité knihovny -->
+  <div class="card">
+    <h2>Použité knihovny</h2>
+    <table>
+    <thead><tr><th>Knihovna</th><th>Použití</th></tr></thead>
+    <tbody>
+    <tr><td>pygame</td><td>Grafické rozhraní, herní smyčka</td></tr>
+    <tr><td>sqlite3</td><td>Ukládání a načítání skóre</td></tr>
+    <tr><td>http.server</td><td>Webový admin server</td></tr>
+    <tr><td>urllib.parse</td><td>Zpracování URL parametrů</td></tr>
+    <tr><td>datetime</td><td>Datum záznamu skóre</td></tr>
+    <tr><td>os</td><td>Souborový systém a cesty</td></tr>
+    <tr><td>sys</td><td>Argumenty příkazové řádky</td></tr>
+    <tr><td>random</td><td>Generování plošin</td></tr>
+    </tbody>
+    </table>
+  </div>
 
-<tr>
-<th>Stav</th>
-<td>Ve vývoji</td>
-</tr>
+  <!-- PRAVÝ SLOUPEC: Algoritmus -->
+  <div class="card">
+    <h2>Algoritmus hry</h2>
+    <pre>
+INIT:
+  vytvoř okno
+  vygeneruj plošiny
 
-</tbody>
-</table>
+LOOP:
+  while hra běží:
 
+    | načti vstup (← →)
+    | aplikuj gravitaci
 
-<h2>Popis programu</h2>
+    | if kolize s plošinou:
+    |     vyskočí
 
-<p>
-Hra Hopík je jednoduchá plošinová hra vytvořená v jazyce Python pomocí knihovny pygame.
-Hráč ovládá postavu, která skáče po pohyblivých plošinách a snaží se dosáhnout co
-nejvyššího skóre. Skóre se ukládá do databáze a následně se zobrazuje na webové stránce.
-</p>
+    | if hráč vysoko:
+    |     posuň obrazovku
+    |     přičti skóre
 
+    | pohybuj plošinami
+    | generuj nové plošiny
 
-<h2>Algoritmus hry</h2>
+    | if hráč spadl:
+    |     ulož skóre → DB
+    |     aktualizuj HTML
+    |     konec hry
+    </pre>
+  </div>
 
-<pre>
-1. Spustí se hra a vytvoří se herní okno
-2. Vygenerují se plošiny
+  <!-- LEVÝ SLOUPEC: Popis databáze -->
+  <div class="card">
+    <h2>Popis databáze</h2>
+    <p>Databáze obsahuje tři tabulky. Tabulka <strong>score</strong> je vazební tabulka realizující vztah M:N mezi hráčem a hrou.</p>
+    <br>
+    <table>
+    <thead><tr><th>Tabulka</th><th>Popis</th></tr></thead>
+    <tbody>
+    <tr><td>hrac</td><td>Jména hráčů (UNIQUE)</td></tr>
+    <tr><td>hra</td><td>Názvy her (UNIQUE)</td></tr>
+    <tr><td>score</td><td>Skóre, datum, FK na hráče a hru</td></tr>
+    </tbody>
+    </table>
+  </div>
 
-3. while hra běží:
+  <!-- PRAVÝ SLOUPEC: Normalizace -->
+  <div class="card">
+    <h2>Normalizace databáze (BCNF)</h2>
+    <table>
+    <thead><tr><th>NF</th><th>✅</th><th>Důvod</th></tr></thead>
+    <tbody>
+    <tr><td>1. NF</td><td>✅</td><td>Atomické hodnoty, bez opakujících se skupin</td></tr>
+    <tr><td>2. NF</td><td>✅</td><td>Každý atribut závisí na celém primárním klíči</td></tr>
+    <tr><td>3. NF</td><td>✅</td><td>Žádná tranzitivní závislost mezi atributy</td></tr>
+    <tr><td>BCNF</td><td>✅</td><td>Každý determinant je kandidátním klíčem</td></tr>
+    </tbody>
+    </table>
+  </div>
 
-    načti vstup hráče (šipky)
+  <!-- CELÁ ŠÍŘKA: ER diagram -->
+  <div class="card card-full">
+    <h2>ER diagram</h2>
+    <div class="diagram" style="text-align:center;">
+      <img src="er_diagram.png" alt="ER diagram">
+    </div>
+  </div>
 
-    aplikuj gravitaci na hráče
+  <!-- CELÁ ŠÍŘKA: Vývojový diagram -->
+  <div class="card card-full">
+    <h2>Vývojový diagram</h2>
+    <div class="diagram" style="text-align:center;">
+      <img src="vy_diagram.png" alt="Vývojový diagram">
+    </div>
+  </div>
 
-    pokud hráč narazí na plošinu:
-        hráč vyskočí
-
-    pokud je hráč vysoko:
-        posuň obrazovku
-        přičti skóre
-
-    pohybuj plošinami
-
-    generuj nové plošiny
-
-    pokud hráč spadne:
-        ulož skóre do databáze
-        aktualizuj HTML tabulku
-        konec hry
-</pre>
-
+</div>
 
 <a class="back" href="index.html">← Zpět do menu</a>
 

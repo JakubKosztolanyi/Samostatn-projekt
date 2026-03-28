@@ -1,19 +1,29 @@
 import os
 import sys
 
-# 🔥 fix importu
+# fix importu – přidá složku skriptu do cesty
 sys.path.insert(0, os.path.dirname(__file__))
 
 from databaze import nacti_score
 
 
 def aktualizuj_html():
+    """
+    Vygeneruje HTML soubor s tabulkou skóre a uloží ho do složky Web/.
 
+    Načte aktuální skóre z databáze pomocí nacti_score(),
+    sestaví HTML tabulku se sloupci: pořadí, hráč, skóre, datum
+    a výsledek zapíše do souboru Web/hra.html.
+
+    Soubor je přepsán při každém volání funkce.
+    """
+    # načte data z databáze
     data = nacti_score()
 
     rows = ""
     pozice = 1
 
+    # sestaví řádky tabulky pro každý záznam
     for jmeno, body, datum in data:
 
         rows += f"""
@@ -24,10 +34,9 @@ def aktualizuj_html():
 <td>{datum}</td>
 </tr>
 """
-
         pozice += 1
 
-
+    # sestaví celý HTML dokument
     html = f"""
 <!DOCTYPE html>
 <html lang="cs">
@@ -71,6 +80,7 @@ def aktualizuj_html():
 </html>
 """
 
+    # uloží soubor do složky Web/
     base = os.path.dirname(__file__)
     path = os.path.join(base, "..", "Web", "hra.html")
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -14,6 +13,21 @@
 <h1>🏆 SCORE TABULKA</h1>
 <div class="subtitle">Nejlepší hráči</div>
 
+<!-- LOGIN -->
+<div id="login-box">
+  <input type="text" id="username" placeholder="Zadej jméno">
+  <button onclick="login()">Přihlásit</button>
+</div>
+
+<!-- USER INFO -->
+<div id="user-info" style="display:none; margin-bottom:15px;">
+  Přihlášen jako: <b id="user-name"></b>
+  <button onclick="logout()">Odhlásit</button>
+</div>
+
+<!-- TABULKA -->
+<div id="table-box" style="display:none;">
+
 <table>
 
 <thead>
@@ -27,7 +41,6 @@
 
 <tbody>
 
-
 <tr>
 <td>1</td>
 <td>bomboclat</td>
@@ -35,14 +48,50 @@
 <td>2026-03-26</td>
 </tr>
 
-
 </tbody>
 
 </table>
 
+</div>
+
 <a class="back" href="index.html">← Zpět do menu</a>
 
 </div>
+
+<!-- SCRIPT -->
+<script>
+function login() {
+  const name = document.getElementById("username").value;
+
+  if (!name) {
+    alert("Zadej jméno");
+    return;
+  }
+
+  localStorage.setItem("user", name);
+  showUser();
+}
+
+function logout() {
+  localStorage.removeItem("user");
+  location.reload();
+}
+
+function showUser() {
+  const user = localStorage.getItem("user");
+
+  if (!user) return;
+
+  document.getElementById("login-box").style.display = "none";
+  document.getElementById("user-info").style.display = "block";
+  document.getElementById("user-name").innerText = user;
+  document.getElementById("table-box").style.display = "block";
+}
+
+window.onload = () => {
+  showUser();
+};
+</script>
 
 </body>
 </html>
