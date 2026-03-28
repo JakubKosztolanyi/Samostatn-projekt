@@ -1,7 +1,13 @@
-from pygame import *  # import knihovny pygame pro tvorbu hry
-import random  # pro generování náhodných čísel
-from databaze import uloz_score  # funkce pro uložení score do databáze
-from html_generator import aktualizuj_html  # funkce která aktualizuje HTML stránku se score
+from pygame import *
+import random
+import sys
+import os
+
+# 🔥 přidá cestu (fix importů)
+sys.path.insert(0, os.path.dirname(__file__))
+
+from databaze import uloz_score
+from html_generator import aktualizuj_html
 
 WINDOW_WIDTH = 500  # šířka okna hry
 WINDOW_HEIGHT = 550  # výška okna hry

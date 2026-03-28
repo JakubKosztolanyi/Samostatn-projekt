@@ -1,7 +1,16 @@
 import sqlite3
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.parse
-from Hra.html_generator import aktualizuj_html
+import sys
+import os
+
+# 🔥 ABSOLUTNÍ cesta (100% fix)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+HRA_PATH = os.path.join(BASE_DIR, "Hra")
+
+sys.path.insert(0, HRA_PATH)
+
+from html_generator import aktualizuj_html
 
 PORT = 8000
 admin = False
@@ -12,7 +21,13 @@ def get_scores():
     conn = sqlite3.connect("Hra/hramenu.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT id, jmeno, body, datum FROM score ORDER BY body DESC")
+    cursor.execute("""
+    SELECT hrac.jmeno, score.body, score.datum, score.id
+    FROM score
+    JOIN hrac ON score.hrac_id = hrac.id
+    JOIN hra ON score.hra_id = hra.id
+    ORDER BY score.body DESC
+    """)
 
     data = cursor.fetchall()
 
@@ -76,14 +91,14 @@ class Server(BaseHTTPRequestHandler):
             delete_button = ""
 
             if admin:
-                delete_button = f'<td><a style="color:red;" href="/delete?id={s[0]}">❌</a></td>'
+                delete_button = f'<td><a style="color:red;" href="/delete?id={s[3]}">❌</a></td>'
 
             rows += f"""
 <tr>
 <td>{i}</td>
+<td>{s[0]}</td>
 <td>{s[1]}</td>
 <td>{s[2]}</td>
-<td>{s[3]}</td>
 {delete_button}
 </tr>
 """
